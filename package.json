@@ -5,6 +5,7 @@
   "main": "main.tsx",
   "scripts": {
     "commit": "git-cz",
+    "start": "gulp",
     "gulp": "gulp",
     "test": "istanbul cover _mocha -- -R spec dist/test/**/*Tests.js",
     "check-coverage": "istanbul check-coverage ",
