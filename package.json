@@ -6,7 +6,7 @@
   "scripts": {
     "commit": "git-cz",
     "gulp": "gulp",
-    "test": "istanbul cover _mocha -- -R spec dist/test/*Tests.js",
+    "test": "istanbul cover _mocha -- -R spec dist/test/**/*Tests.js",
     "check-coverage": "istanbul check-coverage ",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release pre && semantic-release post"
@@ -49,6 +49,7 @@
     "commitizen": "2.8.6",
     "cz-conventional-changelog": "1.2.0",
     "del": "2.2.2",
+    "enzyme": "2.6.0",
     "gulp": "3.9.1",
     "gulp-istanbul": "1.1.1",
     "gulp-mocha": "3.0.1",

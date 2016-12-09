@@ -43,8 +43,8 @@ export const createList = (filter) => {
     switch (action.type) {
       case 'FETCH_CONTENT_FAILURE':
         return action.message;
-        case 'FETCH_CONTENT_REQUEST':
-        case 'FETCH_CONTENT_SUCCESS':
+      case 'FETCH_CONTENT_REQUEST':
+      case 'FETCH_CONTENT_SUCCESS':
         return null;
       default:
         return state;
@@ -72,5 +72,5 @@ export const getVisibleTodos = (state, filter) => {
 export const getIsFetching = (state, filter) =>
   Reducers.getFetching(state.listByFilter[filter]);
 
-export const getErrorMessage = (state, filter) => 
+export const getErrorMessage = (state, filter) =>
   Reducers.getError(state.listByFilter[filter]);
