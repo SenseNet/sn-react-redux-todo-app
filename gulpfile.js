@@ -125,4 +125,4 @@ gulp.task('stop', function () {
 
 gulp.task("test", ["test:cover"]);
 gulp.task("default", ["build:lint", "build", "test", "bundle"]);
-gulp.task("run", ["start", "connect", 'open', 'stop']);
+gulp.task("run", ["start", "connect", 'open']);
