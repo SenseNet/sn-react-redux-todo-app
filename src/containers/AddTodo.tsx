@@ -15,7 +15,7 @@ let AddTodo = ({ dispatch }) => {
         if (!input.value.trim()) {
           return
         }
-        const content = Content.Create('Task', {
+        let content = Content.Create('Task', {
           Type: 'Task',
           DisplayName: input.value
         });

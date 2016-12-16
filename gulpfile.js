@@ -13,8 +13,12 @@ const tsify = require("tsify");
 const source = require('vinyl-source-stream');
 const fs = require('fs');
 const babelify = require('babelify');
+const open = require('gulp-open');
+const connect = require('gulp-connect');
+const nodemon = require('gulp-nodemon');
+const os = require('os');
 
-gulp.task("build:lint", function() {
+gulp.task("build:lint", function () {
     return gulp.src(["./**/*.ts", "!./node_modules/**/*", "!./test/**/*"])
         .pipe(tslint({
             configuration: {
@@ -28,7 +32,7 @@ gulp.task("build:lint", function() {
         .pipe(tslint.report())
 });
 
-gulp.task("build:clean", function() {
+gulp.task("build:clean", function () {
     return del([
         "./dist",
         "./coverage",
@@ -36,7 +40,7 @@ gulp.task("build:clean", function() {
     ]);
 });
 
-gulp.task("build", ["build:clean"], function() {
+gulp.task("build", ["build:clean"], function () {
     return gulp.src([
         "./src/**/*.ts",
         "./src/**/*.tsx",
@@ -48,13 +52,13 @@ gulp.task("build", ["build:clean"], function() {
         .pipe(gulp.dest("./dist"));
 })
 
-gulp.task("test:instrument", ["build"], function() {
+gulp.task("test:instrument", ["build"], function () {
     return gulp.src("./dist/src/**/*.js")
         .pipe(istanbul())
         .pipe(istanbul.hookRequire());
 });
 
-gulp.task("test:cover", ["test:instrument"], function() {
+gulp.task("test:cover", ["test:instrument"], function () {
     return gulp.src("./dist/**/*Tests.js")
         .pipe(mocha({ ui: "bdd" }))
         .pipe(istanbul.writeReports({
@@ -73,21 +77,52 @@ function remapCoverageFiles() {
             }
         }));
 }
-gulp.task('bundle', function() {
+gulp.task('bundle', function () {
     return browserify({
         basedir: '.',
         debug: true,
         entries: ['src/main.tsx'],
         cache: {},
         packageCache: {},
-        insertGlobals : true
+        insertGlobals: true
     })
         .plugin(tsify)
         .bundle()
-        .on('error', function(error) { console.error(error.toString()); })
+        .on('error', function (error) { console.error(error.toString()); })
         .pipe(source('bundle.js'))
         .pipe(gulp.dest("dist/src"));
 });
 
+gulp.task('connect', function() {
+  connect.server({
+    root: ['./'],
+    port: 4000
+  });
+});
+
+gulp.task('open', function(){
+  var options = {
+    uri: 'http://localhost:4000'
+  };
+  gulp.src(__filename)
+  .pipe(open(options));
+});
+
+gulp.task('start', function () {
+    nodemon({
+        script: 'server.js',
+        ext: 'js html',
+        env: { 'NODE_ENV': 'development' }
+    })
+})
+
+gulp.task('stop', function () {
+    nodemon({
+        script: 'server.stop.js',
+        env: { 'NODE_ENV': 'development' }
+    })
+})
+
 gulp.task("test", ["test:cover"]);
 gulp.task("default", ["build:lint", "build", "test", "bundle"]);
+gulp.task("run", ["start", "connect", 'open', 'stop']);

@@ -1,4 +1,4 @@
-///<reference path="../../node_modules/@types/mocha/index.d.ts"/>
+//<reference path="../../node_modules/@types/mocha/index.d.ts"/>
 import { combineReducers, createStore } from 'redux';
 import { Reducers, Actions } from 'sn-redux';
 import { createList, listByFilter, getVisibleTodos, getIsFetching, getErrorMessage } from '../src/reducers/filtering'
