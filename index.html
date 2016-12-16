@@ -6,7 +6,7 @@
 	<meta charset="utf-8" />
 	<title>Test App</title>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i&amp;subset=latin-ext"
-		rel="stylesheet"/>
+		rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
 		crossorigin="anonymous"></script>
 
@@ -26,11 +26,40 @@
 		outline: none;
 		margin-right: 10px;
 	}
-
+	h1, h2 {
+  font-weight: normal;
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+      width: 500px;
+    margin: 60px auto;
+}
+#app > img:first-of-type {
+  margin-right: 50px;
+}
+#app > img {
+  height: 150px;
+  margin-bottom: 20px;
+}
+a {
+  color: rgb(0, 188, 212);
+}
+#root table td:nth-child(2) {
+	text-align: right !important;
+}
 </style>
 
 <body>
-	<div id="root">
+	<div id="app">
+		<img src="/src/assets/sensenetlogo.png">
+		<img src="/src/assets/reactlogo.png">
+		<h1>Todos</h1>
+		<div id="root">
+		</div>
 	</div>
 	<script src="dist/src/bundle.js"></script>
 </body>

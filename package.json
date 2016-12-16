@@ -1,6 +1,6 @@
 {
   "name": "sn-react-redux-todo-app",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Todo app with React and Redux built upon Sense/Net ECM",
   "main": "main.tsx",
   "scripts": {
@@ -84,5 +84,9 @@
   },
   "browserify-shim": {
     "siteUrl": "global:siteUrl"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
   }
 }

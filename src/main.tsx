@@ -7,7 +7,7 @@ import { Root } from './components/Root'
 import { Collection, ODataApi, SetSiteUrl } from 'sn-client-js';
 import { listByFilter } from './reducers/filtering'
 
-SetSiteUrl('https://daily.demo.sensenet.com');
+SetSiteUrl('https://demo06.demo.sensenet.com');
 
 const collection = Reducers.collection;
 const myReducer = combineReducers({
@@ -21,3 +21,4 @@ ReactDOM.render(
   <Root store={store} />,
   document.getElementById('root')
 );
+
