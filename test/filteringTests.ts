@@ -1,4 +1,3 @@
-//<reference path="../../node_modules/@types/mocha/index.d.ts"/>
 import { combineReducers, createStore } from 'redux';
 import { Reducers, Actions } from 'sn-redux';
 import { createList, listByFilter, getVisibleTodos, getIsFetching, getErrorMessage } from '../src/reducers/filtering'
@@ -117,7 +116,7 @@ describe('#filtering', () => {
             expect(s["listByFilter"]['All'].errorMessage).to.be.eq(null);
         });
         it('should return null', () => {
-            store.dispatch(Actions.ReceiveContent({ d: { results: [] } }, 'All'));
+            store.dispatch(Actions.ReceiveContent({ d: { results: [] } as any }, 'All'));
             let s = store.getState();
             expect(s["listByFilter"]['All'].errorMessage).to.be.eq(null);
         });
