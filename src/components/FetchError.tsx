@@ -1,17 +1,17 @@
 import * as React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import { Button } from 'react-materialize';
 
 export interface FetchErrorProps {
-    message: string, 
+    message: string,
     onRetry: any
 }
 
-export class FetchError extends React.Component<FetchErrorProps, {}>{
+export class FetchError extends React.Component<FetchErrorProps, {}> {
     render() {
         return (
             <div>
                 <p>Could not fetch content. {this.props.message}</p>
-                <RaisedButton  onClick={this.props.onRetry} label='Retry'  secondary={true} />
+                <Button  onClick={this.props.onRetry}>Retry</Button>
             </div>
         );
     }

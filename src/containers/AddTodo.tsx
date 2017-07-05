@@ -1,34 +1,36 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { TextField } from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import { Button, Input, Icon } from 'react-materialize';
 import { Actions } from 'sn-redux';
-import { Content } from 'sn-client-js';
+import { Content, ContentTypes, Enums } from 'sn-client-js';
 
 let AddTodo = ({ dispatch }) => {
   let input
 
   return (
     <div>
-      <form onSubmit={e => {
+      {/*<form onSubmit={e => {
         e.preventDefault()
         if (!input.value.trim()) {
           return
         }
-        let content = Content.Create('Task', {
-          Type: 'Task',
-          DisplayName: input.value
-        });
-        content['Status'] = 'active';
-        const url = '/workspaces/Project/budapestprojectworkspace/Tasks';
-        dispatch(Actions.CreateContent(url, content))
+
+        const url = '/Root/Sites/Default_Site/tasks';
+        dispatch(Actions.CreateContent(url, ContentTypes.Task, {
+          Name: input.value as string,
+          DisplayName: input.value as string,
+          DueDate: null,
+          Status: 'active'
+        } as any))
         input.value = ''
-      } }>
-        <input className='textField' ref={node => {
+      }}>
+        <Input className='textField' ref={node => {
           input = node
-        } } />
-        <RaisedButton type='submit' primary={true} label='Add Todo' />
-      </form>
+        }} />
+        <Button type='submit'>Add Todo</Button>
+      </form>*/}
+      <Button floating fab='vertical' icon='add' className='red' large style={{ bottom: '45px', right: '24px' }}>
+      </Button>
     </div>
   )
 }
