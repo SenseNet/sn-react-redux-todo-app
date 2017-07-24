@@ -7,13 +7,12 @@
   <meta name="theme-color" content="#000000">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i&amp;subset=latin-ext"
     rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet">
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 
-  <title>Test App</title>
+  <title>SN7 React Redux Todo App</title>
 </head>
 <style>
   html {
@@ -36,13 +35,25 @@
     font-weight: normal;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    text-align: center;
+  }
+
+  h4 {
+    margin-bottom: 2.14rem;
+  }
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    width: 500px;
+    width: 800px;
     margin: 60px auto;
   }
 
@@ -59,6 +70,10 @@
     color: rgb(0, 188, 212);
   }
 
+  #root {
+    text-align: left;
+  }
+
   #root table td:nth-child(2) {
     text-align: right !important;
   }
@@ -71,7 +86,6 @@
   <div id="app">
     <img src="%PUBLIC_URL%/sensenetlogo.png">
     <img src="%PUBLIC_URL%/reactlogo.png">
-    <h1>Todos</h1>
     <div id="root"></div>
   </div>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

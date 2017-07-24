@@ -1,12 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom'
-import 'rxjs';
 import { Root } from './components/Root'
-import registerServiceWorker from './registerServiceWorker';
+import 'rxjs'
 import './index.css';
 
 import { combineReducers } from 'redux';
@@ -24,12 +19,12 @@ const repository = new Repository.SnRepository({
   RepositoryUrl: 'https://sn-services/'
 });
 
+
 const store = Store.configureStore(myReducer, null, null, {}, repository);
 
 store.dispatch(Actions.CheckLoginState());
 
 ReactDOM.render(
-  <Root store={store} />,
+  <Root store={store} repository={repository} />,
   document.getElementById('root') as HTMLElement
 );
-registerServiceWorker();
