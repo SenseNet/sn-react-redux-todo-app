@@ -9,7 +9,6 @@ import { Authentication, ContentTypes, Content } from 'sn-client-js';
 
 import { FilterMenu } from './FilterMenu'
 import VisibleTodoList from '../containers/VisibleTodoList'
-import { getLoginState } from '../reducers/loginState';
 
 import { Actions, Reducers } from 'sn-redux';
 import Login from '../containers/Login';
@@ -124,7 +123,7 @@ class App extends React.Component<AppProps, { content: Content, isAuthenticated:
 
 const mapStateToProps = (state, match) => {
   return {
-    loginState: getLoginState(state.collection),
+    loginState: Reducers.getAuthenticationStatus(state.collection),
     store: state
   }
 }

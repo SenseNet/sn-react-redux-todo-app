@@ -1,6 +1,6 @@
 import { combineReducers, createStore } from 'redux';
 import { Reducers, Actions } from 'sn-redux';
-import { createList, listByFilter, getVisibleTodos, getIsFetching, getErrorMessage } from '../src/reducers/filtering'
+import { createList, listByFilter, getVisibleTodos, getIsFetching, getErrorMessage } from '../reducers/filtering'
 import * as Chai from 'chai';
 const expect = Chai.expect;
 
@@ -106,7 +106,7 @@ describe('#filtering', () => {
     });
     describe('#errorMessage', () => {
         it('should return the given errorMessage', () => {
-            store.dispatch(Actions.ReceiveContentFailure('All', { message: 'error happened' }));
+            store.dispatch(Actions.ReceiveContentFailure('all', { message: 'error happened' }));
             let s = store.getState();
             expect(s["listByFilter"]['All'].errorMessage).to.be.eq('error happened');
         });
@@ -116,19 +116,19 @@ describe('#filtering', () => {
             expect(s["listByFilter"]['All'].errorMessage).to.be.eq(null);
         });
         it('should return null', () => {
-            store.dispatch(Actions.ReceiveContent({ d: { results: [] } as any }, 'All'));
+            store.dispatch(Actions.ReceiveContent({ d: { results: [] } as any }, 'all'));
             let s = store.getState();
             expect(s["listByFilter"]['All'].errorMessage).to.be.eq(null);
         });
     });
     describe('#ids', () => {
         it('should return increment the length of the ids array', () => {
-            store.dispatch(Actions.CreateContentSuccess({ response: { d: { Id: 1234 } } }));
+            store.dispatch(Actions.CreateContentSuccess({ response: { d: { Id: 1234, Status: ["Active"] } } }));
             let s = store.getState();
-            expect(s["listByFilter"]['All']['ids'].length).to.be.deep.equal(4);
+            expect(s["listByFilter"]['Active']['ids'].length).to.be.deep.equal(4);
         });
         it('should return the changed array', () => {
-            store.dispatch(Actions.UpdateContentSuccess({ response: { d: { Id: 5145, Status: ["completed"] } } }));
+            store.dispatch(Actions.UpdateContentSuccess({ Id: 5145, Status: ["Completed"] } ));
             let s = store.getState();
             expect(s["listByFilter"]['Completed']['ids']).to.be.deep.equal([]);
         });
