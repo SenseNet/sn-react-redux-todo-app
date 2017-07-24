@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import { ODataApi } from 'sn-client-js'
+import { ODataApi, ODataHelper } from 'sn-client-js'
 import { Actions } from 'sn-redux'
-import { getVisibleTodos, getErrorMessage, getIsFetching } from '../reducers/filtering'
+import { withRouter } from 'react-router-dom'
+import { getVisibleTodos, getErrorMessage, getIsFetching, getVisibilityFilter } from '../reducers/filtering'
 import { TodoList } from '../components/TodoList'
 import { FetchError } from '../components/FetchError'
-
+import { Preloader } from 'react-materialize'
 
 export interface VisibleTodoListProps {
   onTodoClick: Function,
@@ -14,14 +14,26 @@ export interface VisibleTodoListProps {
   collection: any,
   path: string,
   options: ODataApi.ODataParams,
-  filter: string,
+  filter,
   fetchTodos: Function,
   requestTodos: Function,
   isFetching: false,
+  visibilityFilter: any,
   errorMessage: any
 }
 
-class VisibleTodoList extends React.Component<VisibleTodoListProps, {}>{
+const styles = {
+  loader: {
+    margin: '0 auto'
+  }
+}
+
+class VisibleTodoList extends React.Component<VisibleTodoListProps, {}> {
+
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     this.fetchData(this.props.filter);
   }
@@ -34,7 +46,7 @@ class VisibleTodoList extends React.Component<VisibleTodoListProps, {}>{
   fetchData(filter) {
     const { path, options, fetchTodos } = this.props;
     let optionObj = new ODataApi.ODataParams({
-      select: ['DisplayName', 'Status']
+      select: 'all'
     });
     if (filter === 'Active') {
       optionObj['filter'] = `isOf('Task') and Status eq %27Active%27`;
@@ -49,15 +61,19 @@ class VisibleTodoList extends React.Component<VisibleTodoListProps, {}>{
   }
 
   render() {
-    if (this.props.isFetching && !this.props.collection.length) {
-      return <p>Loading...</p>
+    if (this.props.isFetching && this.props.collection.length > 0) {
+      return (
+        <div style={styles.loader}>
+          <Preloader flashing />
+        </div>
+      )
     }
-    if (this.props.errorMessage && !this.props.collection.length) {
+    if (this.props.errorMessage && this.props.collection.length > 0) {
       return (
         <FetchError
           message={this.props.errorMessage}
           onRetry={() => this.fetchData(this.props.filter)}
-          />
+        />
       )
     }
     return <TodoList collection={this.props.collection} onTodoClick={this.props.onTodoClick} onDeleteClick={this.props.onDeleteClick} />
@@ -66,12 +82,13 @@ class VisibleTodoList extends React.Component<VisibleTodoListProps, {}>{
 
 
 const mapStateToProps = (state, { params }) => {
-  const filter = params.filter || 'All';
-  const url = '/workspaces/Project/budapestprojectworkspace/Tasks';
+  const filter = state.listByFilter.VisibilityFilter || 'All';
+  const url = '/Root/Sites/Default_Site/tasks';
   return {
     collection: getVisibleTodos(state, filter),
     errorMessage: getErrorMessage(state, filter),
     isFetching: getIsFetching(state, filter),
+    visibilityFilter: getVisibilityFilter(state),
     filter,
     options: params.options,
     path: params.path || url,
@@ -82,13 +99,13 @@ const toggleTodoAction = Actions.UpdateContent;
 const deleteTodoAction = Actions.Delete;
 const fetchTodosAction = Actions.RequestContent;
 
-const VisibleTodoLista = withRouter(connect(
+const VisibleTodoLista = connect(
   mapStateToProps,
   {
     onTodoClick: toggleTodoAction,
     onDeleteClick: deleteTodoAction,
     fetchTodos: fetchTodosAction
   }
-)(VisibleTodoList));
+)(VisibleTodoList as any);
 
 export default VisibleTodoLista

@@ -23,15 +23,33 @@ $ npm start
 
 ## Settings
 
-To use this example you'll need a sensenet ECM portal. To connect the app with the portal set your site's url as the app's siteUrl
-
+To use this example you'll need a sensenet ECM portal. To connect the app with the portal create a repository and set its RepositoryUrl
 ```
-import { SetSiteUrl } from 'sn-client-js';
+import { Repository } from 'sn-client-js';
 
-SetSiteUrl('https://mysite.com');
+const repository = new Repository.SnRepository({
+  RepositoryUrl: 'https://sn-services/'
+});
 ```
 
-Go to your portal's Portal.setting (/Root/System/Settings/Portal.settings) and check the allowed origins. To get the app working you have to add the app's domain as an allowed origin so that the app can send requests to the 
+If you've created your app, with sn-client-cli you can set the RepositoryUrl in the related config file (sn.config.js in your projets root) too.
+
+```json
+{
+    RepositoryUrl: "https://sn-services/"
+}
+```
+
+In this case you can define your repository the following way:
+
+```tsx
+import { Repository } from 'sn-client-js';
+import * as snConfig from './sn.config.js';
+
+const repository = new Repository.SnRepository(snConfig);
+```
+
+To allow outer origins go to your portal's Portal.setting (/Root/System/Settings/Portal.settings). To get the app working you have to add the app's domain as an allowed origin so that the app can send requests to the 
 portal and get or set data.
 
 ```
@@ -40,42 +58,33 @@ portal and get or set data.
 }
 ```
 
-For further information about CORS in sensenet ECM check [this](http://wiki.sensenet.com/Cross-origin_resource_sharing) article.
+For further information about CORS in sensenet ECM check [this](http://community.sensenet.com/docs/cors/) article.
 
-The example app uses one of the built-in TaskList Content in the default sensenet ECM install (/workspaces/Project/budapestprojectworkspace/Tasks). If you removed this Content and its children tasks earlier
-or want to try with another TaskList change the value of the ```url``` variable in ```VisibleTodoList.tsx``` and ```AddTodo.tsx``` to the chosen list's path.
+The example app uses a TaskList Content that should be created in sensenet ECM portal. In the downloadable example it is '/Root/Sites/Default_Site/tasks' so if you want to try it with your custom sensenet ECM install (no matter which one, eg, services, webpages, etc), you can create it at the same path, or modify it in the VisibleTodoList.tsx and the App.tsx files.
 
-The example app demonstrates not only how to fetching data but also Content creation and delete. The app doesn't provide authentication because of it's simplicity so you have to make some permission changes
-in your sensenet ECM portal to let Visitor users adding and removing tasks from the chosen parent list.
+The example app demonstrates not only how to fetching data but also Content creation, edit and delete. The app provides authentication (for further information please check the docs with the ['jwt' tag](http://community.sensenet.com/tags/#jwt)), please check that the permission of the users are set correctly to run the mentioned applications.
+
 If you are not familiar with sensenet ECM's permission system check the following wiki articles:
 * [sensenet ECM Permission System](http://wiki.sensenet.com/Permission_System)
 * [How to set permissions on a content in sensenet ECM](http://wiki.sensenet.com/How_to_set_permissions_on_a_content)
 
-## Deploy
+## Deployment
 
-To make trying out the app quick and simple there's a gulpfile added to the repository with all of the required tasks.
+The app became now [create-react-app](https://github.com/facebookincubator/create-react-app) based, which means you can use its great tools with no extra configurations. Since all our related projects are written in Typescript we used here [create-react-app-typescript].(https://github.com/wmonk/create-react-app-typescript).
 
 To build the project run
 
 ```
-gulp build
+npm build
 ```
 
-It will transpile the .ts and .tsx files to JavaScript and copy them along with the sourcemaps to the dist folder.
+It will transpile the .ts and .tsx files to JavaScript and copy them along with the sourcemaps to the dist folder along with the .css files.
 
-To run the tests and create a coverage report run
+To run the tests
 
 ```
-gulp test
+npm test
 ```
-
-To create a bundle.js with all the required modules run
-```
-gulp bundle
-```
-It uses Browserify to bundle the JavaScript modules into on file and place it to the 'dist' folder.
-
-If you want to run all the gulp tasks at once use simply the ```gulp``` command.
 
 ## Related documents
 

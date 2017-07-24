@@ -1,13 +1,8 @@
 import * as React from 'react'
-import DropDownMenu from 'material-ui/DropDownMenu';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
-import Checkbox from 'material-ui/Checkbox';
+import { Link } from 'react-router-dom';
+import { Input, Button, Collection, CollectionItem, Row, Col, Icon } from 'react-materialize';
 import { Content } from 'sn-client-js'
 import { Actions } from 'sn-redux'
-import Delete from 'material-ui/svg-icons/action/delete';
 
 
 export interface TodoProps {
@@ -33,26 +28,34 @@ interface TodoListState {
 
 export class Todo extends React.Component<TodoProps, {}> {
     render() {
-        let comp = this.props.Status.indexOf('completed') > -1 ? true : false;
+        let comp = this.props.Status.indexOf('completed') > -1 ? 'checked' : '';
         let displayName = this.props.DisplayName;
         let content = this.props;
+        let link = `/edit/` + content.Id;
+
         return (
-            <Table>
-                <TableBody displayRowCheckbox={false}>
-                    <TableRow selectable={false}>
-                        <TableRowColumn>
-                            <Checkbox
-                                checked={comp}
-                                onCheck={this.props.onClick}
+            <Collection>
+                <CollectionItem>
+                    <Row style={{ marginBottom: 0 }}>
+                        <Col s={12} m={8} l={8} style={{ paddingTop: 7 }}>
+                            <Input
+                                type='checkbox'
+                                defaultChecked={comp}
+                                onChange={this.props.onClick}
                                 label={this.props.DisplayName}
-                                />
-                        </TableRowColumn>
-                        <TableRowColumn>
-                         <Delete onClick={() => this.props.onDeleteClick(content.Id, true)} />
-                        </TableRowColumn>
-                    </TableRow>
-                </TableBody>
-            </Table>
+                                style={{ marginTop: 10 }}
+                            />
+                        </Col>
+                        <Col s={12} m={4} l={4} style={{ textAlign: 'center' }}>
+                            <Link to={link}>
+                                <Button className='cyan' waves='light' icon='edit' style={{ marginRight: 10 }}>
+                                </Button>
+                            </Link>
+                            <Button className='deep-orange' waves='light' icon='delete' onClick={() => this.props.onDeleteClick(content.Id, true)} />
+                        </Col>
+                    </Row>
+                </CollectionItem>
+            </Collection>
         )
     }
 }

@@ -3,11 +3,11 @@ import { Reducers } from 'sn-redux';
 
 export const createList = (filter) => {
   const handleToggle = (state, action, filter) => {
-    const {result: toggleId, entities} = action.response;
-    const {Status} = entities.collection[toggleId];
+    const { result: toggleId, entities } = action.response;
+    const { Status } = entities.collection[toggleId];
     const shouldRemove = (
-      (Status.indexOf('Active') === - 1 && filter === 'Active') ||
-      (Status.indexOf('Completed') === - 1 && filter === 'Completed')
+      (Status.indexOf('Active') === - 1 && filter === 'active') ||
+      (Status.indexOf('Completed') === - 1 && filter === 'completed')
     );
     return shouldRemove ?
       state.filter(Id => Id !== toggleId) :
@@ -58,10 +58,21 @@ export const createList = (filter) => {
   });
 };
 
+
+const visibilityFilter = (state = 'All', action) => {
+  switch (action.type) {
+    case 'SET_VISIBILITY_FILTER':
+      return action.filter
+    default:
+      return state
+  }
+}
+
 export const listByFilter = combineReducers({
-  All: createList('All'),
-  Active: createList('Active'),
-  Completed: createList('Completed')
+  All: createList('all'),
+  Active: createList('active'),
+  Completed: createList('completed'),
+  VisibilityFilter: visibilityFilter
 })
 
 export const getVisibleTodos = (state, filter) => {
@@ -74,3 +85,13 @@ export const getIsFetching = (state, filter) =>
 
 export const getErrorMessage = (state, filter) =>
   Reducers.getError(state.listByFilter[filter]);
+
+export const getVisibilityFilter = (state) =>
+  state.collection.filter;
+
+export const setVisibilityFilter = filter => {
+  return {
+    type: 'SET_VISIBILITY_FILTER',
+    filter
+  }
+}

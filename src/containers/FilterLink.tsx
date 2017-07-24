@@ -1,24 +1,25 @@
-import * as React from 'react';
-import { Link } from 'react-router';
+import { connect } from 'react-redux'
+import { setVisibilityFilter } from '../reducers/filtering'
+import InnerLink from '../components/LinkInner'
 
-export interface FilterLinkProps {
-    filter: string,
-    children?: any
+const mapStateToProps = (state, ownProps) => {
+  return {
+    active: ownProps.filter === state.listByFilter.VisibilityFilter
+  }
 }
 
-export class FilterLink extends React.Component<FilterLinkProps, {}>
-{
-    render() {
-        return (
-            <Link
-                to={this.props.filter === 'All' ? '' : this.props.filter}
-                activeStyle={{
-                    textDecoration: 'none',
-                    color: 'black'
-                }}
-                >
-                {this.props.children}
-            </Link>
-        )
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onClick: () => {
+      dispatch(setVisibilityFilter(ownProps.filter))
     }
+  }
 }
+
+const FilterLink = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InnerLink)
+
+export default FilterLink
+
