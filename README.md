@@ -1,5 +1,7 @@
 # Todo App example with SN7, React and Redux
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/SenseNet/sn-react-redux-todo-app.svg)](https://greenkeeper.io/)
+
 [![Build status](https://img.shields.io/travis/SenseNet/sn-react-redux-todo-app.svg?style=flat)](https://travis-ci.org/SenseNet/sn-react-redux-todo-app)
 [![Coverage](https://img.shields.io/codecov/c/github/SenseNet/sn-react-redux-todo-app.svg?style=flat)](https://codecov.io/gh/SenseNet/sn-react-redux-todo-app)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b09d599538fa49e9bb1cb92df4042ada)](https://www.codacy.com/app/herflis33/sn-react-redux-todo-app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SenseNet/sn-react-redux-todo-app&amp;utm_campaign=Badge_Grade)
