@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
-import { ODataApi, ODataHelper } from 'sn-client-js'
+import { ODataApi, ODataHelper, ContentTypes } from 'sn-client-js'
 import { Actions } from 'sn-redux'
 import { withRouter } from 'react-router-dom'
 import { getVisibleTodos, getErrorMessage, getIsFetching, getVisibilityFilter } from '../reducers/filtering'
@@ -11,15 +11,16 @@ import { Preloader } from 'react-materialize'
 export interface VisibleTodoListProps {
   onTodoClick: Function,
   onDeleteClick: Function,
-  collection: any,
+  collection: ContentTypes.Task[],
   path: string,
-  options: ODataApi.ODataParams,
+  options: ODataApi.IODataParams<ContentTypes.Task>,
   filter,
   fetchTodos: Function,
   requestTodos: Function,
   isFetching: false,
   visibilityFilter: any,
-  errorMessage: any
+  errorMessage: any,
+  repository
 }
 
 const styles = {
@@ -45,9 +46,9 @@ class VisibleTodoList extends React.Component<VisibleTodoListProps, {}> {
 
   fetchData(filter) {
     const { path, options, fetchTodos } = this.props;
-    let optionObj = new ODataApi.ODataParams({
+    let optionObj = {
       select: 'all'
-    });
+    };
     if (filter === 'Active') {
       optionObj['filter'] = `isOf('Task') and Status eq %27Active%27`;
     }
@@ -57,7 +58,7 @@ class VisibleTodoList extends React.Component<VisibleTodoListProps, {}> {
     else {
       optionObj['filter'] = "isOf('Task')";
     }
-    fetchTodos(path, optionObj);
+    fetchTodos(path, optionObj, ContentTypes.Task);
   }
 
   render() {
@@ -76,12 +77,12 @@ class VisibleTodoList extends React.Component<VisibleTodoListProps, {}> {
         />
       )
     }
-    return <TodoList collection={this.props.collection} onTodoClick={this.props.onTodoClick} onDeleteClick={this.props.onDeleteClick} />
+    return <TodoList repository={this.props.repository} collection={this.props.collection} onTodoClick={this.props.onTodoClick} onDeleteClick={this.props.onDeleteClick} />
   }
 }
 
 
-const mapStateToProps = (state, { params }) => {
+const mapStateToProps = (state, params) => {
   const filter = state.listByFilter.VisibilityFilter || 'All';
   const url = '/Root/Sites/Default_Site/tasks';
   return {
@@ -90,8 +91,7 @@ const mapStateToProps = (state, { params }) => {
     isFetching: getIsFetching(state, filter),
     visibilityFilter: getVisibilityFilter(state),
     filter,
-    options: params.options,
-    path: params.path || url,
+    path: params.path || url
   }
 }
 

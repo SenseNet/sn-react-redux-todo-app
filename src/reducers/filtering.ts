@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
 import { Reducers } from 'sn-redux';
+import { Enums } from 'sn-client-js';
 
 export const createList = (filter) => {
   const handleToggle = (state, action, filter) => {
     const { result: toggleId, entities } = action.response;
-    const { Status } = entities.collection[toggleId];
+    const { Status } = entities.children[toggleId];
     const shouldRemove = (
-      (Status.indexOf('Active') === - 1 && filter === 'active') ||
-      (Status.indexOf('Completed') === - 1 && filter === 'completed')
+      (Status[0] === Enums.Status.active && filter === 'active') ||
+      (Status[0] === Enums.Status.completed && filter === 'completed')
     );
     return shouldRemove ?
       state.filter(Id => Id !== toggleId) :
@@ -77,7 +78,7 @@ export const listByFilter = combineReducers({
 
 export const getVisibleTodos = (state, filter) => {
   const ids = Reducers.getIds(state.listByFilter[filter])
-  return ids.map(Id => Reducers.getContent(state.collection.byId, Id));
+  return ids.map(Id => Reducers.getContent(state.sensenet.children.entities, Id));
 }
 
 export const getIsFetching = (state, filter) =>
@@ -87,7 +88,7 @@ export const getErrorMessage = (state, filter) =>
   Reducers.getError(state.listByFilter[filter]);
 
 export const getVisibilityFilter = (state) =>
-  state.collection.filter;
+  state.sensenet.children.filter;
 
 export const setVisibilityFilter = filter => {
   return {
