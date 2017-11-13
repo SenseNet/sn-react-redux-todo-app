@@ -9,20 +9,19 @@ import { Store, Reducers, Actions } from 'sn-redux';
 import { Repository } from 'sn-client-js';
 import { listByFilter } from './reducers/filtering';
 
-const collection = Reducers.collection;
+const sensenet = Reducers.sensenet;
 const myReducer = combineReducers({
-  collection,
+  sensenet,
   listByFilter
 });
 
 const repository = new Repository.SnRepository({
-  RepositoryUrl: 'https://sn-services/'
+  RepositoryUrl: 'https://dmsservice.demo.sensenet.com'
 });
 
 
-const store = Store.configureStore(myReducer, null, null, {}, repository);
-
-store.dispatch(Actions.CheckLoginState());
+const store = Store.configureStore(myReducer, null, null, {}, repository)
+store.dispatch(Actions.InitSensenetStore('/Root/Sites/Default_Site/tasks', { select: 'all', filter: "isof('Task')" }))
 
 ReactDOM.render(
   <Root store={store} repository={repository} />,

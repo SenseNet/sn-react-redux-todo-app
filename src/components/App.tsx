@@ -34,11 +34,10 @@ export interface AppProps {
   id: number
 }
 
-class App extends React.Component<AppProps, { content: Content, isAuthenticated: boolean, params }> {
+class App extends React.Component<AppProps, { content: Content, params }> {
   public name: string = '';
   public password: string = '';
   public LoginState: Authentication.LoginState;
-  public CurrentState: Authentication.LoginState;
   public listView: any;
   public newView: any;
   public editView: any;
@@ -48,12 +47,11 @@ class App extends React.Component<AppProps, { content: Content, isAuthenticated:
     super(props);
 
     this.state = {
-      content: Content.Create(ContentTypes.Task, {
+      content: Content.Create({
         Path: '/Root/Sites/Default_Site/tasks',
         Status: 'active' as any
-      }, this.props.repository),
-      params: this.props,
-      isAuthenticated: false
+      }, ContentTypes.Task, this.props.repository),
+      params: this.props
     }
 
     this.listView = () => {
@@ -61,7 +59,7 @@ class App extends React.Component<AppProps, { content: Content, isAuthenticated:
         <div>
           <h4>Todos</h4>
           <FilterMenu />
-          <VisibleTodoList params />
+          <VisibleTodoList params repository={this.props.repository} />
         </div>
       )
     }
@@ -74,18 +72,7 @@ class App extends React.Component<AppProps, { content: Content, isAuthenticated:
       }
     }
 
-    this.newView = ({ match }) => <NewView content={this.state.content} />
-  }
-
-  handler(e) {
-    e.preventDefault()
-    if (!this) {
-      return;
-    }
-    if (this.props.loginState === Authentication.LoginState.Authenticated) {
-      this.setState({ isAuthenticated: true });
-    }
-    else { this.setState({ isAuthenticated: false }); }
+    this.newView = ({ match }) => <NewView content={this.state.content} onSubmit={this.props.createSubmitClick} />
   }
 
   render() {
@@ -114,7 +101,7 @@ class App extends React.Component<AppProps, { content: Content, isAuthenticated:
     else {
       return (
         <div>
-          <Login dispatch handler={this.handler} props={{ name: this.name, password: this.password }} />
+          <Login props={{ name: this.name, password: this.password }} />
         </div>
       )
     }
@@ -123,7 +110,7 @@ class App extends React.Component<AppProps, { content: Content, isAuthenticated:
 
 const mapStateToProps = (state, match) => {
   return {
-    loginState: Reducers.getAuthenticationStatus(state.collection),
+    loginState: Reducers.getAuthenticationStatus(state.sensenet),
     store: state
   }
 }

@@ -1,37 +1,23 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom';
 import { Input, Button, Collection, CollectionItem, Row, Col, Icon } from 'react-materialize';
-import { Content } from 'sn-client-js'
+import { Content, ContentTypes, Enums } from 'sn-client-js'
 import { Actions } from 'sn-redux'
 
 
-export interface TodoProps {
-    collection: TodoListItem[],
-    DisplayName: string,
-    Status: string,
-    Id: number,
+interface TodoProps {
+    content: ContentTypes.Task,
     onClick: any,
     onDeleteClick: any
 }
 
-interface TodoListItem {
-    DisplayName: string;
-    Name: string;
-    Icon: string;
-    Id: number;
-}
-
-interface TodoListState {
-    collection: any[],
-    value: string
-}
-
 export class Todo extends React.Component<TodoProps, {}> {
     render() {
-        let comp = this.props.Status.indexOf('completed') > -1 ? 'checked' : '';
-        let displayName = this.props.DisplayName;
-        let content = this.props;
-        let link = `/edit/` + content.Id;
+        let comp = '';
+        if (this.props.content.Status && this.props.content.Status[0] === 'completed')
+            comp = 'checked'
+        let displayName = this.props.content.DisplayName;
+        let link = `/edit/` + this.props.content.Id;
 
         return (
             <Collection>
@@ -42,7 +28,7 @@ export class Todo extends React.Component<TodoProps, {}> {
                                 type='checkbox'
                                 defaultChecked={comp}
                                 onChange={this.props.onClick}
-                                label={this.props.DisplayName}
+                                label={this.props.content.DisplayName}
                                 style={{ marginTop: 10 }}
                             />
                         </Col>
@@ -51,7 +37,7 @@ export class Todo extends React.Component<TodoProps, {}> {
                                 <Button className='cyan' waves='light' icon='edit' style={{ marginRight: 10 }}>
                                 </Button>
                             </Link>
-                            <Button className='deep-orange' waves='light' icon='delete' onClick={() => this.props.onDeleteClick(content.Id, true)} />
+                            <Button className='deep-orange' waves='light' icon='delete' onClick={() => this.props.onDeleteClick(this.props.content.Id, true)} />
                         </Col>
                     </Row>
                 </CollectionItem>

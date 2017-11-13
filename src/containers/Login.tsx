@@ -10,13 +10,13 @@ const styles = {
     marginTop: '20px'
   },
   container: {
-    width: 500,
+    maxWidth: 500,
     margin: '0 auto',
     textAlign: 'center'
   }
 };
 
-let Login = ({ dispatch, handler, props }) => {
+let Login = ({ dispatch, props }) => {
   let name, password;
   let user = ReactControlMapper.GetFullSchemaForContentType(ContentTypes.User, 'new');
   user.FieldMappings = user.FieldMappings
@@ -27,9 +27,7 @@ let Login = ({ dispatch, handler, props }) => {
         e.preventDefault()
         const name = document.getElementsByClassName('LoginName')['LoginName'].value;
         const password = document.getElementsByClassName('Password')['Password'].value;
-
         dispatch(Actions.UserLogin(name, password))
-        handler(e)
       }}>
 
         {
