@@ -4,8 +4,9 @@ import { Enums } from 'sn-client-js';
 
 export const createList = (filter) => {
   const handleToggle = (state, action, filter) => {
-    const { result: toggleId, entities } = action.response;
-    const { Status } = entities.children[toggleId];
+    const { result: toggleId, children } = action.response;
+    console.log(children)
+    const { Status } = children.entities[toggleId];
     const shouldRemove = (
       (Status[0] === Enums.Status.active && filter === 'active') ||
       (Status[0] === Enums.Status.completed && filter === 'completed')
@@ -78,7 +79,7 @@ export const listByFilter = combineReducers({
 
 export const getVisibleTodos = (state, filter) => {
   const ids = Reducers.getIds(state.listByFilter[filter])
-  return ids.map(Id => Reducers.getContent(state.sensenet.children.entities, Id));
+  return ids.map(Id => Reducers.getContent(state.collection.children.entities, Id));
 }
 
 export const getIsFetching = (state, filter) =>
