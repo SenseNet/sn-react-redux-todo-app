@@ -79,7 +79,7 @@ export const listByFilter = combineReducers({
 
 export const getVisibleTodos = (state, filter) => {
   const ids = Reducers.getIds(state.listByFilter[filter])
-  return ids.map(Id => Reducers.getContent(state.collection.children.entities, Id));
+  return ids.map(Id => Reducers.getContent(state.sensenet.children.entities, Id));
 }
 
 export const getIsFetching = (state, filter) =>
