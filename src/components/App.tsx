@@ -47,10 +47,7 @@ class App extends React.Component<AppProps, { content: Content, params }> {
     super(props);
 
     this.state = {
-      content: Content.Create({
-        Path: '/Root/Sites/Default_Site/tasks',
-        Status: 'active' as any
-      }, ContentTypes.Task, this.props.repository),
+      content: this.props.repository.CreateContent({ Status: 'active' as any, Path: '/Root/Sites/Default_Site/tasks' }, ContentTypes.Task),
       params: this.props
     }
 
@@ -65,7 +62,7 @@ class App extends React.Component<AppProps, { content: Content, params }> {
     }
 
     this.editView = ({ match }) => {
-      let selectedContent = Reducers.getContent(this.props.store.collection.byId, match.params.id)
+      let selectedContent = Reducers.getContent(this.props.store.sensenet.children.entities, match.params.id)
       let content = this.props.repository.HandleLoadedContent(selectedContent)
       if (content && content !== 'undefined') {
         return <EditView content={content} history={history} onSubmit={this.props.editSubmitClick} />
@@ -76,8 +73,8 @@ class App extends React.Component<AppProps, { content: Content, params }> {
   }
 
   render() {
-    let isLoggedin = (this.props.loginState === 2);
-    let isPending = (this.props.loginState === 0);
+    let isLoggedin = (this.props.loginState === Authentication.LoginState.Authenticated);
+    let isPending = (this.props.loginState === Authentication.LoginState.Pending);
     if (isLoggedin) {
       return (
         <Router>

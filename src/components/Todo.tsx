@@ -37,7 +37,7 @@ export class Todo extends React.Component<TodoProps, {}> {
                                 <Button className='cyan' waves='light' icon='edit' style={{ marginRight: 10 }}>
                                 </Button>
                             </Link>
-                            <Button className='deep-orange' waves='light' icon='delete' onClick={() => this.props.onDeleteClick(this.props.content.Id, true)} />
+                            <Button className='deep-orange' waves='light' icon='delete' onClick={() => this.props.onDeleteClick(this.props.content, true)} />
                         </Col>
                     </Row>
                 </CollectionItem>

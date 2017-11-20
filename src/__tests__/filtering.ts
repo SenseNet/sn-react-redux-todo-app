@@ -112,12 +112,10 @@ describe('#filtering', () => {
         });
     });
     describe('#ids', () => {
-        let content
+        let content;
+        let repo: Mocks.MockRepository = new Mocks.MockRepository();
         it('should return increment the length of the ids array', () => {
-            content = Content.Create({
-                Path: '/Root/Sites/Default_Site/tasks',
-                Status: 'active' as any
-            }, ContentTypes.Task, repo)
+            content = repo.CreateContent({ DisplayName: 'My content', Id: 123 }, ContentTypes.Task);
             store.dispatch(Actions.CreateContentSuccess(content));
             let s = store.getState();
             expect(s["listByFilter"]['Active']['ids'].length).to.be.deep.equal(4);
