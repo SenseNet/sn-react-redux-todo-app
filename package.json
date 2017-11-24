@@ -67,7 +67,7 @@
     "react-scripts-ts": "2.9.0",
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
-    "sn-client-js": "^2.5.0",
+    "sn-client-js": "^3.0.0",
     "sn-redux": "^3.3.1",
     "typescript": "^2.6.1"
   },
