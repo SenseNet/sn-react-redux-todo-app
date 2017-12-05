@@ -4,15 +4,13 @@ import { Enums } from 'sn-client-js';
 
 export const createList = (filter) => {
   const handleToggle = (state, action, filter) => {
-    const { result: toggleId, children } = action.response;
-    console.log(children)
-    const { Status } = children.entities[toggleId];
+    const { Id, Status } = action.response;
     const shouldRemove = (
-      (Status[0] === Enums.Status.active && filter === 'active') ||
-      (Status[0] === Enums.Status.completed && filter === 'completed')
+      (Status[0] === Enums.Status.active && filter !== 'active' && filter !== 'all') ||
+      (Status[0] === Enums.Status.completed && filter !== 'completed' && filter !== 'all')
     );
     return shouldRemove ?
-      state.filter(Id => Id !== toggleId) :
+      state.filter(id => id !== Id) :
       state;
   }
   const ids = (state = [], action) => {
@@ -24,7 +22,8 @@ export const createList = (filter) => {
       case 'UPDATE_CONTENT_SUCCESS':
         return handleToggle(state, action, filter)
       case 'DELETE_CONTENT_SUCCESS':
-        return [...state.slice(0, action.index), ...state.slice(action.index + 1)];
+        const index = state.indexOf(action.id)
+        return [...state.slice(0, index), ...state.slice(index + 1)];
       default:
         return state;
     }
@@ -79,7 +78,7 @@ export const listByFilter = combineReducers({
 
 export const getVisibleTodos = (state, filter) => {
   const ids = Reducers.getIds(state.listByFilter[filter])
-  return ids.map(Id => Reducers.getContent(state.collection.children.entities, Id));
+  return ids.map(Id => Reducers.getContent(state.sensenet.children.entities, Id));
 }
 
 export const getIsFetching = (state, filter) =>

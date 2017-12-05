@@ -11,7 +11,11 @@
     "rootDir": "src",
     "noImplicitAny": false,
     "preserveConstEnums": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "exclude": [
     "node_modules",
