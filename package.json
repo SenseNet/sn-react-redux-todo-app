@@ -56,8 +56,9 @@
     "react-quill": "^1.1.0",
     "react-router-redux": "^4.0.8",
     "rxjs": "^5.5.2",
+    "sn-client-auth-google": "^1.0.0-rc.1",
     "sn-client-cli": "^1.0.0-RC.3",
-    "sn-controls-react": "1.0.0-beta.1"
+    "sn-controls-react": "^1.0.1-beta.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -67,12 +68,16 @@
     "react-scripts-ts": "2.8.0",
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
-    "sn-client-js": "^2.5.0",
-    "sn-redux": "^3.3.1",
+    "sn-client-js": "^3.0.0",
+    "sn-redux": "^3.4.0",
     "typescript": "^2.6.1"
   },
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
-  }
+  },
+  "types": [
+    "jest",
+    "node"
+  ]
 }
