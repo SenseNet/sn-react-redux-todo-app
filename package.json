@@ -50,7 +50,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "material-ui": "^0.19.4",
     "material-ui-chip-input": "^0.18.3",
-    "radium": "^0.19.6",
+    "radium": "^0.21.0",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-quill": "^1.1.0",
