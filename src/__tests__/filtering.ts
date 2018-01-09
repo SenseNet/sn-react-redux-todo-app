@@ -7,11 +7,11 @@ const expect = Chai.expect;
 
 describe('#filtering', () => {
     let state: any;
-    let collection, myReducer, store;
+    let sensenet, myReducer, store;
     let repo: Mocks.MockRepository = new Mocks.MockRepository();
     beforeEach(() => {
         state = {
-            collection: {
+            sensenet: {
                 children: {
                     entities: {
                         5145: {
@@ -56,9 +56,9 @@ describe('#filtering', () => {
                 }
             }
         }
-        collection = Reducers.sensenet;
+        sensenet = Reducers.sensenet;
         myReducer = combineReducers({
-            collection,
+            sensenet,
             listByFilter
         });
         store = createStore(
