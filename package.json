@@ -65,7 +65,7 @@
     "react-materialize": "^1.0.18",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-scripts-ts": "2.12.0",
+    "react-scripts-ts": "2.13.0",
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
     "sn-client-js": "^3.0.0",
