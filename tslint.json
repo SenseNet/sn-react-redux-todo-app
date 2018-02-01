@@ -1,4 +1,9 @@
 {
+    "linterOptions": {
+        "exclude": [
+            "node_modules/**/*.ts"
+        ]
+    },
     "rules": {
         "class-name": true,
         "comment-format": [
