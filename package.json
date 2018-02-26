@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "react-materialize": "^1.0.18",
+    "react-materialize": "^2.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.13.0",
