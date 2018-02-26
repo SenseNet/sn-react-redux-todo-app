@@ -61,7 +61,7 @@
     "sn-controls-react": "^1.0.1-beta.1",
     "sn-client-js": "^3.0.0",
     "sn-redux": "^3.4.0",
-    "webpack": "^3.7.1"
+    "webpack": "^4.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
