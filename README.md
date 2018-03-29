@@ -9,7 +9,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat)](http://commitizen.github.io/cz-cli/)
 
-This example is simple todo app built with React+Redux upon sensenet ECM which has been prepared to demonstrate how to use the new sensenet ECM related libraries [sn-client-js](https://github.com/SenseNet/sn-client-js)
+This example is simple todo app built with React+Redux upon sensenet which has been prepared to demonstrate how to use the new sensenet related libraries [sn-client-js](https://github.com/SenseNet/sn-client-js)
 and [sn-redux](https://github.com/SenseNet/sn-redux). The app and a steps of the related tutorial are based on two awesome Redux courses of Dan Abramov: 
 [Getting Started with Redux](https://egghead.io/courses/getting-started-with-redux) and [Building React Applications with Idiomatic Redux](https://egghead.io/courses/building-react-applications-with-idiomatic-redux). 
 These two courses are extremely helpful and essential, recommended for everyone who is interested in building scalable apps with [Redux](http://redux.js.org/).
@@ -25,7 +25,7 @@ $ npm start
 
 ## Settings
 
-To use this example you'll need a sensenet ECM portal. To connect the app with the portal create a repository and set its RepositoryUrl
+To use this example you'll need a sensenet portal. To connect the app with the portal create a repository and set its RepositoryUrl
 ```
 import { Repository } from 'sn-client-js';
 
@@ -60,15 +60,15 @@ portal and get or set data.
 }
 ```
 
-For further information about CORS in sensenet ECM check [this](http://community.sensenet.com/docs/cors/) article.
+For further information about CORS in sensenet check [this](http://community.sensenet.com/docs/cors/) article.
 
-The example app uses a TaskList Content that should be created in sensenet ECM portal. In the downloadable example it is '/Root/Sites/Default_Site/tasks' so if you want to try it with your custom sensenet ECM install (no matter which one, eg, services, webpages, etc), you can create it at the same path, or modify it in the VisibleTodoList.tsx and the App.tsx files.
+The example app uses a TaskList Content that should be created in sensenet portal. In the downloadable example it is '/Root/Sites/Default_Site/tasks' so if you want to try it with your custom sensenet install (no matter which one, eg, services, webpages, etc), you can create it at the same path, or modify it in the VisibleTodoList.tsx and the App.tsx files.
 
 The example app demonstrates not only how to fetching data but also Content creation, edit and delete. The app provides authentication (for further information please check the docs with the ['jwt' tag](http://community.sensenet.com/tags/#jwt)), please check that the permission of the users are set correctly to run the mentioned applications.
 
-If you are not familiar with sensenet ECM's permission system check the following wiki articles:
-* [sensenet ECM Permission System](http://wiki.sensenet.com/Permission_System)
-* [How to set permissions on a content in sensenet ECM](http://wiki.sensenet.com/How_to_set_permissions_on_a_content)
+If you are not familiar with sensenet's permission system check the following wiki articles:
+* [sensenet Permission System](http://wiki.sensenet.com/Permission_System)
+* [How to set permissions on a content in sensenet](http://wiki.sensenet.com/How_to_set_permissions_on_a_content)
 
 ## Deployment
 
