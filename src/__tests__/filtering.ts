@@ -1,4 +1,4 @@
-import { Actions, Reducers } from '@sensenet/redux'
+import { Reducers } from '@sensenet/redux'
 import * as Chai from 'chai'
 import { combineReducers, createStore } from 'redux'
 import { getErrorMessage, getIsFetching, getVisibleTodos, listByFilter } from '../reducers/filtering'
@@ -6,9 +6,16 @@ const expect = Chai.expect
 
 describe('#filtering', () => {
     let state: any
-    let sensenet
-    let myReducer
-    let store
+    const sensenet = Reducers.sensenet
+    const myReducer = combineReducers({
+        sensenet,
+        listByFilter,
+    })
+    const store = createStore(
+        myReducer,
+        state,
+    )
+    console.log(store)
 
     beforeEach(() => {
         state = {
@@ -57,15 +64,6 @@ describe('#filtering', () => {
                 },
             },
         }
-        sensenet = Reducers.sensenet
-        myReducer = combineReducers({
-            sensenet,
-            listByFilter,
-        })
-        store = createStore(
-            myReducer,
-            state,
-        )
     })
 
     describe('#getVisibleTodos', () => {
