@@ -1,29 +1,30 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import { Root } from './components/Root'
-import 'rxjs'
-import './index.css';
+import './index.css'
 
-import { combineReducers } from 'redux';
-import { Store, Reducers, Actions } from 'sn-redux';
-import { Repository } from 'sn-client-js';
-import { listByFilter } from './reducers/filtering';
+import { Repository } from '@sensenet/client-core'
+import { Reducers, Store } from '@sensenet/redux'
+import { combineReducers } from 'redux'
+import { listByFilter } from './reducers/filtering'
 
-const sensenet = Reducers.sensenet;
+const sensenet = Reducers.sensenet
 const myReducer = combineReducers({
   sensenet,
-  listByFilter
-});
+  listByFilter,
+})
 
-const repository = new Repository.SnRepository({
-  RepositoryUrl: 'https://dmsservice.demo.sensenet.com'
-});
+const repository = new Repository({
+  repositoryUrl: 'https://dmsservice.demo.sensenet.com',
+})
 
-
-const store = Store.configureStore(myReducer, null, null, {}, repository)
-store.dispatch(Actions.InitSensenetStore('/Root/Sites/Default_Site/tasks', { select: 'all', filter: "isof('Task')" }))
+const options = {
+  rootReducer: myReducer,
+  repository,
+} as Store.CreateStoreOptions
+const store = Store.createSensenetStore(options)
 
 ReactDOM.render(
   <Root store={store} repository={repository} />,
-  document.getElementById('root') as HTMLElement
-);
+  document.getElementById('root') as HTMLElement,
+)

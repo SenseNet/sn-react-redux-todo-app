@@ -1,47 +1,55 @@
+import CreateIcon from '@material-ui/icons/Create'
+import DeleteIcon from '@material-ui/icons/Delete'
+import { Task } from '@sensenet/default-content-types'
+import Checkbox from 'material-ui/Checkbox'
+import { FormControlLabel } from 'material-ui/Form'
+import Grid from 'material-ui/Grid'
+import IconButton from 'material-ui/IconButton'
 import * as React from 'react'
-import { Link } from 'react-router-dom';
-import { Input, Button, Collection, CollectionItem, Row, Col, Icon } from 'react-materialize';
-import { Content, ContentTypes, Enums } from 'sn-client-js'
-import { Actions } from 'sn-redux'
 
+import { Link } from 'react-router-dom'
 
 interface TodoProps {
-    content: ContentTypes.Task,
+    content: Task,
     onClick: any,
     onDeleteClick: any
 }
 
-export class Todo extends React.Component<TodoProps, {}> {
-    render() {
-        let comp = '';
-        if (this.props.content.Status && this.props.content.Status[0] === 'completed')
-            comp = 'checked'
-        let displayName = this.props.content.DisplayName;
-        let link = `/edit/` + this.props.content.Id;
-
+export class Todo extends React.Component<TodoProps, { comp }> {
+    constructor(props) {
+        super(props)
+        this.state = {
+            comp: this.props.content.Status && this.props.content.Status[0] === 'completed' ? true : false,
+        }
+    }
+    public render() {
+        const link = `/edit/` + this.props.content.Id
+        const { content, onClick } = this.props
         return (
-            <Collection>
-                <CollectionItem>
-                    <Row style={{ marginBottom: 0 }}>
-                        <Col s={12} m={8} l={8} style={{ paddingTop: 7 }}>
-                            <Input
-                                type='checkbox'
-                                defaultChecked={comp}
-                                onChange={this.props.onClick}
-                                label={this.props.content.DisplayName}
-                                style={{ marginTop: 10 }}
+            <Grid container>
+                <Grid sm={12} md={8} lg={8} style={{ paddingTop: 7 }}>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={this.state.comp}
+                                onChange={onClick('checkedA')}
+                                value="comp"
                             />
-                        </Col>
-                        <Col s={12} m={4} l={4} style={{ textAlign: 'center' }}>
-                            <Link to={link}>
-                                <Button className='cyan' waves='light' icon='edit' style={{ marginRight: 10 }}>
-                                </Button>
-                            </Link>
-                            <Button className='deep-orange' waves='light' icon='delete' onClick={() => this.props.onDeleteClick(this.props.content, true)} />
-                        </Col>
-                    </Row>
-                </CollectionItem>
-            </Collection>
+                        }
+                        label={content.DisplayName}
+                    />
+                </Grid>
+                <Grid sm={12} md={4} lg={4} style={{ textAlign: 'center' }}>
+                    <Link to={link}>
+                        <IconButton aria-label="Edit">
+                            <CreateIcon />
+                        </IconButton>
+                    </Link>
+                    <IconButton aria-label="Delete" onClick={() => this.props.onDeleteClick(this.props.content, true)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Grid>
+            </Grid>
         )
     }
 }

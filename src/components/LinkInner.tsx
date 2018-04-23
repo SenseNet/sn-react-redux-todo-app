@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
+import * as React from 'react'
+import { Link } from 'react-router-dom'
 
 const style = {
     active: {
-        borderBottom: 'solid 2px #f6b2b5'
-    }
+        borderBottom: 'solid 2px #f6b2b5',
+    },
 }
 
 export interface FilterLinkProps {
@@ -14,12 +14,12 @@ export interface FilterLinkProps {
 }
 
 class InnerLink extends React.Component<FilterLinkProps, {}> {
-    render() {
+    public render() {
         return (
-            <li className='tab col'>
+            <li className="tab col">
                 <Link
                     to={this.props.children === 'All' ? '/browse/All' : '/browse/' + this.props.children}
-                    onClick={e => {
+                    onClick={(e) => {
                         this.props.onClick()
                     }}
                     style={(this.props.active) ? style.active : {}}
