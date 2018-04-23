@@ -95,11 +95,4 @@ describe('#filtering', () => {
             expect(getErrorMessage(state, 'All')).to.be.eq(undefined)
         })
     })
-    describe('#errorMessage', () => {
-        it('should return null', () => {
-            store.dispatch(Actions.requestContent('/workspaces', {}))
-            const s = store.getState()
-            expect(s.listByFilter.All.errorMessage).to.be.eq(null)
-        })
-    })
 })
