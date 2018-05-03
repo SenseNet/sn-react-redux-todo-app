@@ -11,7 +11,7 @@ export class Root extends React.Component<RootProps, {}> {
     public render() {
         return (
             <Provider store={this.props.store} >
-                <App params repository={this.props.repository}/>
+                <App params repository={this.props.repository} />
             </Provider>
         )
     }

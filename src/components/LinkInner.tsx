@@ -1,9 +1,15 @@
+import Button from 'material-ui/Button'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
-const style = {
+const styles = {
     active: {
-        borderBottom: 'solid 2px #f6b2b5',
+        borderBottom: 'solid 2px #fff',
+        color: '#fff',
+        textDecoration: 'none',
+    },
+    tabButton: {
+        color: '#fff',
     },
 }
 
@@ -16,17 +22,17 @@ export interface FilterLinkProps {
 class InnerLink extends React.Component<FilterLinkProps, {}> {
     public render() {
         return (
-            <li className="tab col">
+            <Button color="secondary" style={styles.tabButton}>
                 <Link
                     to={this.props.children === 'All' ? '/browse/All' : '/browse/' + this.props.children}
                     onClick={(e) => {
                         this.props.onClick()
                     }}
-                    style={(this.props.active) ? style.active : {}}
+                    style={(this.props.active) ? styles.active : { color: '#fff', textDecoration: 'none' }}
                 >
                     {this.props.children}
                 </Link>
-            </li>
+            </Button>
         )
     }
 }

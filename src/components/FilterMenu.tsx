@@ -1,3 +1,6 @@
+
+import AppBar from 'material-ui/AppBar'
+import Toolbar from 'material-ui/Toolbar'
 import * as React from 'react'
 import FilterLink from '../containers/FilterLink'
 
@@ -10,17 +13,19 @@ export class FilterMenu extends React.Component<{}, {}> {
    */
   public render() {
     return (
-      <div className="tabs tab-demo z-depth-1" style={{textAlign: 'center'}}>
-        <FilterLink filter="All">
-          All
+      <AppBar position="static">
+        <Toolbar>
+            <FilterLink filter="All">
+              All
       </FilterLink>
-        <FilterLink filter="Active">
-          Active
+            <FilterLink filter="Active">
+              Active
       </FilterLink>
-        <FilterLink filter="Completed">
-          Completed
+            <FilterLink filter="Completed">
+              Completed
       </FilterLink>
-      </div>
+        </Toolbar>
+      </AppBar>
     )
   }
 }

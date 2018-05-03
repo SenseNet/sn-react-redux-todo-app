@@ -25,6 +25,24 @@ const styles = {
   },
 }
 
+// const styles = (theme) => ({
+//   button: {
+//     margin: theme.spacing.unit,
+//   },
+//   leftIcon: {
+//     marginRight: theme.spacing.unit,
+//   },
+//   rightIcon: {
+//     marginLeft: theme.spacing.unit,
+//   },
+//   iconSmall: {
+//     fontSize: 20,
+//   },
+//   loader: {
+//     textAlign: 'center',
+//   },
+// })
+
 interface AppProps {
   loginState,
   store,
@@ -50,9 +68,8 @@ interface AppState {
 class App extends React.Component<AppProps, AppState> {
   constructor(props) {
     super(props)
-
     this.state = {
-      content: { Status: 'active' as any, Path: '/Root/Sites/Default_Site/tasks'} as Task,
+      content: { Status: 'active' as any, Path: '/Root/Sites/Default_Site/tasks', Type: 'Task' } as Task,
       params: this.props,
       loginState: LoginState.Pending,
       name: '',
@@ -66,7 +83,7 @@ class App extends React.Component<AppProps, AppState> {
           </div>
         )
       },
-      newView: ({ match }) => <NewView content={this.state.content} onSubmit={this.props.createSubmitClick} />,
+      newView: ({ match }) => <NewView content={this.state.content} repository={this.props.repository} onSubmit={this.props.createSubmitClick} />,
       editView: ({ match }) => {
         const selectedContent = Reducers.getContent(this.props.store.sensenet.children.entities, match.params.id)
         const content = this.props.repository.HandleLoadedContent(selectedContent)
@@ -126,10 +143,10 @@ const userLogin = Actions.userLogin
 const update = Actions.updateContent
 const create = Actions.createContent
 
-export default connect(
+export default (connect(
   mapStateToProps,
   {
     loginClick: userLogin,
     editSubmitClick: update,
     createSubmitClick: create,
-  })(App as any)
+  })(App as any))

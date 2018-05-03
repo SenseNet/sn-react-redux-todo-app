@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import { Root } from './components/Root'
 import './index.css'
 
+import { JwtService } from '@sensenet/authentication-jwt'
 import { Repository } from '@sensenet/client-core'
 import { Reducers, Store } from '@sensenet/redux'
 import { combineReducers } from 'redux'
@@ -29,6 +30,9 @@ const myReducer = combineReducers({
 const repository = new Repository({
   repositoryUrl: 'https://dmsservice.demo.sensenet.com',
 })
+
+// tslint:disable-next-line:variable-name
+const _jwtService = new JwtService(repository)
 
 const options = {
   rootReducer: myReducer,

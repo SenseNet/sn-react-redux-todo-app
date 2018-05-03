@@ -1,17 +1,23 @@
 import { reactControlMapper } from '@sensenet/controls-react/dist/ReactControlMapper'
 import { Actions } from '@sensenet/redux'
 import Button from 'material-ui/Button'
+import Grid from 'material-ui/Grid'
 import * as React from 'react'
 import { connect } from 'react-redux'
 
 const styles = {
   button: {
     marginTop: '20px',
+    color: '#fff',
   },
   container: {
     maxWidth: 500,
     margin: '0 auto',
     textAlign: 'center',
+  },
+  buttonRow: {
+    textAlign: 'right',
+    width: '100%',
   },
 }
 
@@ -24,27 +30,31 @@ const login = ({ dispatch, props }) => {
       <form onSubmit={(e) => {
         e.preventDefault()
         // tslint:disable-next-line:no-string-literal
-        const name = document.getElementsByClassName('LoginName')['LoginName'].value
+        const name = document.getElementById('LoginName')['value']
         // tslint:disable-next-line:no-string-literal
-        const password = document.getElementsByClassName('Password')['Password'].value
+        const password = document.getElementById('Password')['value']
         dispatch(Actions.userLogin(name, password))
       }}>
-
-        {
-          user.fieldMappings.map((e, i) => {
-            return (
-              React.createElement(
-                user.fieldMappings[i].controlType,
-                {
-                  ...user.fieldMappings[i].clientSettings,
-                  'data-actionName': 'new',
-                  'data-fieldValue': '',
-                  'className': user.fieldMappings[i].clientSettings.key,
-                })
+        <Grid container>
+          {
+            user.fieldMappings.map((e, i) =>
+              <Grid item sm={12} md={12} lg={12} key={i}>
+                {React.createElement(
+                  user.fieldMappings[i].controlType,
+                  {
+                    ...user.fieldMappings[i].clientSettings,
+                    'data-actionName': 'new',
+                    'data-fieldValue': '',
+                    'className': user.fieldMappings[i].clientSettings.key,
+                  },
+                )}
+              </Grid>,
             )
-          })
-        }
-        <Button style={styles.button} variant="raised">Login</Button>
+          }
+          <Grid item style={styles.buttonRow}>
+            <Button type="submit" style={styles.button} variant="raised" color="primary">Login</Button>
+          </Grid>
+        </Grid>
       </form>
     </div>
   )
