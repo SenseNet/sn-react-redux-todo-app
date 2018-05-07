@@ -21,25 +21,32 @@ export class Todo extends React.Component<TodoProps, { comp }> {
         this.state = {
             comp: this.props.content.Status && this.props.content.Status[0] === 'completed' ? true : false,
         }
+        this.handleClick = this.handleClick.bind(this)
+    }
+    public handleClick(e) {
+        const selected = this.state.comp ? false : true
+        this.setState({
+            comp: selected,
+        })
     }
     public render() {
         const link = `/edit/` + this.props.content.Id
-        const { content, onClick } = this.props
+        const { content } = this.props
         return (
             <Grid container>
-                <Grid sm={12} md={8} lg={8} style={{ paddingTop: 7 }}>
+                <Grid item sm={12} md={8} lg={8} style={{ paddingTop: 7 }}>
                     <FormControlLabel
                         control={
                             <Checkbox
                                 checked={this.state.comp}
-                                onChange={onClick('checkedA')}
+                                onClick={(e) => { this.handleClick(e) && this.props.onClick('checkedA')} }
                                 value="comp"
                             />
                         }
                         label={content.DisplayName}
                     />
                 </Grid>
-                <Grid sm={12} md={4} lg={4} style={{ textAlign: 'center' }}>
+                <Grid item sm={12} md={4} lg={4} style={{ textAlign: 'center' }}>
                     <Link to={link}>
                         <IconButton aria-label="Edit">
                             <CreateIcon />

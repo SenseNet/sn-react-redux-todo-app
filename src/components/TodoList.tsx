@@ -30,8 +30,8 @@ export class TodoList extends React.Component<TodoListProps, {}> {
                 <Todo key={c.Id}
                   content={c}
                   onClick={() => {
-                    c.Status = c.Status[0] === Status.active ? Status.completed : Status.active
-                    this.props.onTodoClick(c)
+                    const vmi = { Status: c.Status[0] === Status.active ? Status.completed : Status.active } as Partial<Task>
+                    this.props.onTodoClick(c.Id, vmi)
                   }}
                   onDeleteClick={this.props.onDeleteClick}
                 />
