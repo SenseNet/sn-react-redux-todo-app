@@ -41,6 +41,10 @@ class VisibleTodoList extends React.Component<VisibleTodoListProps, {}> {
     if (this.props.filter !== prevOps.filter) {
       this.fetchData(this.props.filter)
     }
+    // tslint:disable-next-line:no-string-literal
+    if (this.props.collection && this.props.collection.length > prevOps.collection.length) {
+      this.fetchData(this.props.filter)
+    }
   }
   public fetchData(filter) {
     const { path, fetchTodos } = this.props

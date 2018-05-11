@@ -24,10 +24,11 @@ export class TodoList extends React.Component<TodoListProps, {}> {
       return (
         <List>
           {
-            this.props.collection.map((content) => {
+            this.props.collection.map((content, index) => {
               const c = content as Task
-              return (<ListItem key={c.Id}>
-                <Todo key={c.Id}
+              return c !== undefined ?
+               (<ListItem key={c.Name + index}>
+                <Todo key={c.Id + index}
                   content={c}
                   onClick={() => {
                     const vmi = { Status: c.Status[0] === Status.active ? Status.completed : Status.active } as Partial<Task>
@@ -35,7 +36,7 @@ export class TodoList extends React.Component<TodoListProps, {}> {
                   }}
                   onDeleteClick={this.props.onDeleteClick}
                 />
-              </ListItem>)
+              </ListItem>) : null
             },
             )}
         </List>

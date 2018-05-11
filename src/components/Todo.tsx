@@ -52,7 +52,7 @@ export class Todo extends React.Component<TodoProps, { comp }> {
                             <CreateIcon />
                         </IconButton>
                     </Link>
-                    <IconButton aria-label="Delete" onClick={() => this.props.onDeleteClick(this.props.content, true)}>
+                    <IconButton aria-label="Delete" onClick={() => this.props.onDeleteClick(this.props.content.Id, true)}>
                         <DeleteIcon />
                     </IconButton>
                 </Grid>

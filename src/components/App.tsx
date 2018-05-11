@@ -86,9 +86,9 @@ class App extends React.Component<AppProps, AppState> {
       newView: ({ match }) => <NewView content={this.state.content} repository={this.props.repository} onSubmit={this.props.createSubmitClick} />,
       editView: ({ match }) => {
         const selectedContent = Reducers.getContent(this.props.store.sensenet.children.entities, match.params.id)
-        const content = this.props.repository.HandleLoadedContent(selectedContent)
-        if (content && content !== 'undefined') {
-          return <EditView content={content} history={history} onSubmit={this.props.editSubmitClick} />
+        const content = selectedContent as Task
+        if (content) {
+          return <EditView content={content} history={history} onSubmit={this.props.editSubmitClick} repository={this.props.repository} />
         } else {
           return null
         }
