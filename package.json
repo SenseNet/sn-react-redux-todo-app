@@ -43,7 +43,7 @@
     "@types/orchestrator": "^0.3.2",
     "@types/react": "^16.0.22",
     "@types/react-dom": "^16.0.3",
-    "@types/react-redux": "^5.0.12",
+    "@types/react-redux": "^6.0.0",
     "@types/react-tap-event-plugin": "^0.0.30",
     "codecov.io": "^0.1.6",
     "commitizen": "^2.9.6",
