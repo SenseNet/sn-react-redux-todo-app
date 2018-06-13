@@ -9,10 +9,10 @@ import { Reducers, Store } from '@sensenet/redux'
 import { combineReducers } from 'redux'
 import { listByFilter } from './reducers/filtering'
 
-import lightBlue from 'material-ui/colors/lightBlue'
-import pink from 'material-ui/colors/pink'
-import createMuiTheme from 'material-ui/styles/createMuiTheme'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import lightBlue from '@material-ui/core/colors/lightBlue'
+import pink from '@material-ui/core/colors/pink'
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 
 const muiTheme = createMuiTheme({
   palette: {
@@ -35,9 +35,11 @@ const repository = new Repository({
 const _jwtService = new JwtService(repository)
 
 const options = {
-  rootReducer: myReducer,
   repository,
-} as Store.CreateStoreOptions
+  rootReducer: myReducer,
+  logger: true,
+} as Store.CreateStoreOptions<any>
+
 const store = Store.createSensenetStore(options)
 
 ReactDOM.render(

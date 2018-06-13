@@ -1,5 +1,6 @@
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
 import { Status, Task } from '@sensenet/default-content-types'
-import List, { ListItem } from 'material-ui/List'
 import * as React from 'react'
 import { Todo } from './Todo'
 
@@ -43,7 +44,7 @@ export class TodoList extends React.Component<TodoListProps, {}> {
       )
     } else {
       return (
-        <div style={style.emptyList}>Add a task first!</div>
+        <div style={style.emptyList as any}>Add a task first!</div>
       )
     }
   }

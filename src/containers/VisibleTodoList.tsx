@@ -1,7 +1,7 @@
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { IODataParams } from '@sensenet/client-core'
 import { Task } from '@sensenet/default-content-types'
 import { Actions } from '@sensenet/redux'
-import { CircularProgress } from 'material-ui/Progress'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { FetchError } from '../components/FetchError'

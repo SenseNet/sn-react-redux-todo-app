@@ -9,11 +9,11 @@ import {
 import VisibleTodoList from '../containers/VisibleTodoList'
 import { FilterMenu } from './FilterMenu'
 
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { LoginState } from '@sensenet/client-core'
 import { EditView, NewView } from '@sensenet/controls-react'
-import { Task } from '@sensenet/default-content-types'
+import { Schema, Task } from '@sensenet/default-content-types'
 import { Actions, Reducers } from '@sensenet/redux'
-import { CircularProgress } from 'material-ui/Progress'
 import Login from '../containers/Login'
 import { Menu } from './Menu'
 
@@ -25,24 +25,6 @@ const styles = {
   },
 }
 
-// const styles = (theme) => ({
-//   button: {
-//     margin: theme.spacing.unit,
-//   },
-//   leftIcon: {
-//     marginRight: theme.spacing.unit,
-//   },
-//   rightIcon: {
-//     marginLeft: theme.spacing.unit,
-//   },
-//   iconSmall: {
-//     fontSize: 20,
-//   },
-//   loader: {
-//     textAlign: 'center',
-//   },
-// })
-
 interface AppProps {
   loginState,
   store,
@@ -50,7 +32,9 @@ interface AppProps {
   filter,
   editSubmitClick,
   createSubmitClick,
-  id: number
+  id: number,
+  schema: Schema,
+  getSchema
 }
 
 interface AppState {
@@ -60,7 +44,6 @@ interface AppState {
   listView,
   newView,
   editView,
-  schema,
   name,
   password
 }
@@ -83,18 +66,18 @@ class App extends React.Component<AppProps, AppState> {
           </div>
         )
       },
-      newView: ({ match }) => <NewView content={this.state.content} repository={this.props.repository} onSubmit={this.props.createSubmitClick} />,
+      newView: ({ match }) => <NewView path={this.state.content.Path} repository={this.props.repository} onSubmit={this.props.createSubmitClick} schema={this.props.schema} />,
       editView: ({ match }) => {
         const selectedContent = Reducers.getContent(this.props.store.sensenet.children.entities, match.params.id)
         const content = selectedContent as Task
         if (content) {
-          return <EditView content={content} history={history} onSubmit={this.props.editSubmitClick} repository={this.props.repository} />
+          return <EditView content={content} history={history} onSubmit={this.props.editSubmitClick} repository={this.props.repository} schema={this.props.schema} />
         } else {
           return null
         }
       },
-      schema: null,
     }
+    this.props.getSchema('Task')
   }
   /**
    * render
@@ -118,7 +101,7 @@ class App extends React.Component<AppProps, AppState> {
       )
     } else if (isPending) {
       return (
-        <div style={styles.loader}>
+        <div style={styles.loader as any}>
           <CircularProgress />
         </div>
       )
@@ -136,12 +119,14 @@ const mapStateToProps = (state, match) => {
   return {
     loginState: Reducers.getAuthenticationStatus(state.sensenet),
     store: state,
+    schema: Reducers.getSchema(state.sensenet),
   }
 }
 
 const userLogin = Actions.userLogin
 const update = Actions.updateContent
 const create = Actions.createContent
+const getSchema = Actions.getSchema
 
 export default (connect(
   mapStateToProps,
@@ -149,4 +134,5 @@ export default (connect(
     loginClick: userLogin,
     editSubmitClick: update,
     createSubmitClick: create,
+    getSchema,
   })(App as any))
