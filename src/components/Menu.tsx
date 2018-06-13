@@ -1,29 +1,30 @@
+import Button from '@material-ui/core/Button'
+import AddIcon from '@material-ui/icons/Add'
 import * as React from 'react'
 import {
-    BrowserRouter as Router,
-    Route,
-    Link
+    Link,
 } from 'react-router-dom'
-import { Button, Icon } from 'react-materialize'
+
+const styles = {
+    actionButton: {
+        color: '#fff',
+        position: 'fixed',
+        bottom: 10,
+        right: 10,
+    },
+}
 
 export interface MenuProps {
     content
 }
 
 export class Menu extends React.Component<MenuProps, {}> {
-    render() {
+    public render() {
         return (
-            <Button floating fab='vertical' icon='menu' className='red' large style={{ bottom: '45px', right: '24px' }}>
-                <Button floating className='red'>
-                    <Link to='/new/Task'>
-                        <Icon>add</Icon>
-                    </Link>
-                </Button>
-                <Button floating className='green'>
-                    <Link to='/'>
-                        <Icon>language</Icon>
-                    </Link>
-                </Button>
+            <Button variant="fab" color="primary" aria-label="add" style={styles.actionButton as any}>
+                <Link to="/new/Task">
+                    <AddIcon style={{ color: '#fff', marginTop: 5 }} />
+                </Link>
             </Button>
         )
     }
