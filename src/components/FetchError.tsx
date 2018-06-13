@@ -1,18 +1,24 @@
-import * as React from 'react';
-import { Button } from 'react-materialize';
+import Button from '@material-ui/core/Button'
+import * as React from 'react'
 
-export interface FetchErrorProps {
+interface FetchErrorProps {
     message: string,
     onRetry: any
 }
 
+/**
+ * class
+ */
 export class FetchError extends React.Component<FetchErrorProps, {}> {
-    render() {
+    /**
+     * render
+     */
+    public render() {
         return (
             <div>
                 <p>Could not fetch content. {this.props.message}</p>
-                <Button  onClick={this.props.onRetry}>Retry</Button>
+                <Button variant="raised" color="primary" onClick={this.props.onRetry}>Retry</Button>
             </div>
-        );
+        )
     }
 }

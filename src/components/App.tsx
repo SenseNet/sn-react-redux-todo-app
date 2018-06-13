@@ -1,104 +1,114 @@
+import createBrowserHistory from 'history/createBrowserHistory'
 import * as React from 'react'
+import { connect } from 'react-redux'
 import {
   BrowserRouter as Router,
-  Route
+  Route,
 } from 'react-router-dom'
-import createBrowserHistory from 'history/createBrowserHistory'
-import { connect } from 'react-redux'
-import { Authentication, ContentTypes, Content } from 'sn-client-js';
 
-import { FilterMenu } from './FilterMenu'
 import VisibleTodoList from '../containers/VisibleTodoList'
+import { FilterMenu } from './FilterMenu'
 
-import { Actions, Reducers } from 'sn-redux';
-import Login from '../containers/Login';
-import { NewView, EditView, ShortText } from 'sn-controls-react'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { LoginState } from '@sensenet/client-core'
+import { EditView, NewView } from '@sensenet/controls-react'
+import { Schema, Task } from '@sensenet/default-content-types'
+import { Actions, Reducers } from '@sensenet/redux'
+import Login from '../containers/Login'
 import { Menu } from './Menu'
-import { Preloader } from 'react-materialize'
 
 const history = createBrowserHistory()
 
 const styles = {
   loader: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 }
 
-export interface AppProps {
+interface AppProps {
   loginState,
   store,
   repository,
   filter,
-  editSubmitClick: Function,
-  createSubmitClick: Function,
-  id: number
+  editSubmitClick,
+  createSubmitClick,
+  id: number,
+  schema: Schema,
+  getSchema
 }
 
-class App extends React.Component<AppProps, { content: Content, params }> {
-  public name: string = '';
-  public password: string = '';
-  public LoginState: Authentication.LoginState;
-  public listView: any;
-  public newView: any;
-  public editView: any;
-  public schema: any;
+interface AppState {
+  content,
+  params,
+  loginState,
+  listView,
+  newView,
+  editView,
+  name,
+  password
+}
 
+class App extends React.Component<AppProps, AppState> {
   constructor(props) {
-    super(props);
-
+    super(props)
     this.state = {
-      content: this.props.repository.CreateContent({ Status: 'active' as any, Path: '/Root/Sites/Default_Site/tasks' }, ContentTypes.Task),
-      params: this.props
+      content: { Status: 'active' as any, Path: '/Root/Sites/Default_Site/tasks', Type: 'Task' } as Task,
+      params: this.props,
+      loginState: LoginState.Pending,
+      name: '',
+      password: '',
+      listView: () => {
+        return (
+          <div>
+            <h4>Todos</h4>
+            <FilterMenu />
+            <VisibleTodoList params repository={this.props.repository} />
+          </div>
+        )
+      },
+      newView: ({ match }) => <NewView path={this.state.content.Path} repository={this.props.repository} onSubmit={this.props.createSubmitClick} schema={this.props.schema} />,
+      editView: ({ match }) => {
+        const selectedContent = Reducers.getContent(this.props.store.sensenet.children.entities, match.params.id)
+        const content = selectedContent as Task
+        if (content) {
+          return <EditView content={content} history={history} onSubmit={this.props.editSubmitClick} repository={this.props.repository} schema={this.props.schema} />
+        } else {
+          return null
+        }
+      },
     }
-
-    this.listView = () => {
-      return (
-        <div>
-          <h4>Todos</h4>
-          <FilterMenu />
-          <VisibleTodoList params repository={this.props.repository} />
-        </div>
-      )
-    }
-
-    this.editView = ({ match }) => {
-      let selectedContent = Reducers.getContent(this.props.store.sensenet.children.entities, match.params.id)
-      let content = this.props.repository.HandleLoadedContent(selectedContent)
-      if (content && content !== 'undefined') {
-        return <EditView content={content} history={history} onSubmit={this.props.editSubmitClick} />
-      }
-    }
-
-    this.newView = ({ match }) => <NewView content={this.state.content} onSubmit={this.props.createSubmitClick} />
+    this.props.getSchema('Task')
   }
-
-  render() {
-    let isLoggedin = (this.props.loginState === Authentication.LoginState.Authenticated);
-    let isPending = (this.props.loginState === Authentication.LoginState.Pending);
+  /**
+   * render
+   */
+  public render() {
+    const { loginState } = this.props
+    const isLoggedin = (loginState === LoginState.Authenticated)
+    const isPending = (loginState === LoginState.Pending)
+    const { listView, editView, newView, name, password } = this.state
     if (isLoggedin) {
       return (
         <Router>
           <div>
-            <Route exact path='/' component={this.listView} />
-            <Route path='/edit/:id' component={this.editView} />
-            <Route path='/new/:type' component={this.newView} />
-            <Route path='/browse/:filter' component={this.listView} />
+            <Route exact path="/" component={listView} />
+            <Route path="/edit/:id" component={editView} />
+            <Route path="/new/:type" component={newView} />
+            <Route path="/browse/:filter" component={listView} />
             <Menu content />
           </div>
         </Router>
       )
-    }
-    else if (isPending) {
+    } else if (isPending) {
       return (
-        <div style={styles.loader}>
-          <Preloader flashing />
+        <div style={styles.loader as any}>
+          <CircularProgress />
         </div>
       )
-    }
-    else {
+    } else {
       return (
         <div>
-          <Login props={{ name: this.name, password: this.password }} />
+          <Login props={{ name, password }} />
         </div>
       )
     }
@@ -108,20 +118,21 @@ class App extends React.Component<AppProps, { content: Content, params }> {
 const mapStateToProps = (state, match) => {
   return {
     loginState: Reducers.getAuthenticationStatus(state.sensenet),
-    store: state
+    store: state,
+    schema: Reducers.getSchema(state.sensenet),
   }
 }
 
-const userLogin = Actions.UserLogin;
-const update = Actions.UpdateContent;
-const create = Actions.CreateContent;
+const userLogin = Actions.userLogin
+const update = Actions.updateContent
+const create = Actions.createContent
+const getSchema = Actions.getSchema
 
-export default connect(
+export default (connect(
   mapStateToProps,
   {
     loginClick: userLogin,
     editSubmitClick: update,
-    createSubmitClick: create
-  })(App as any);
-
-
+    createSubmitClick: create,
+    getSchema,
+  })(App as any))

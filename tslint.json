@@ -1,84 +1,43 @@
 {
-    "linterOptions": {
-        "exclude": [
-            "node_modules/**/*.ts"
-        ]
-    },
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
     "rules": {
-        "class-name": true,
-        "comment-format": [
+        "member-ordering": false,
+        "object-literal-sort-keys": [
+            false
+        ],        
+        "max-line-length": false,
+        "no-unused-expression": [
             true,
-            "check-space"
-        ],
-        "indent": [
-            true,
-            "spaces"
-        ],
-        "no-duplicate-variable": true,
-        "no-eval": true,
-        "no-internal-module": true,
-        "no-trailing-whitespace": true,
-        "no-var-keyword": true,
-        "variable-name": false,
-        "one-line": [
-            true,
-            "check-open-brace",
-            "check-whitespace"
-        ],
-        "semicolon": false,
-        "triple-equals": [
-            true,
-            "allow-null-check"
-        ],
-        "typedef-whitespace": [
-            true,
-            {
-                "call-signature": "nospace",
-                "index-signature": "nospace",
-                "parameter": "nospace",
-                "property-declaration": "nospace",
-                "variable-declaration": "nospace"
-            }
-        ],
-        "whitespace": [
-            true,
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-type"
-        ],
-        "max-file-line-count": false
-    },
-    "jsRules": {
-        "indent": [
-            true,
-            "spaces"
-        ],
-        "no-duplicate-variable": true,
-        "no-eval": true,
-        "no-trailing-whitespace": true,
-        "one-line": [
-            true,
-            "check-open-brace",
-            "check-whitespace"
-        ],
-        "semicolon": false,
-        "triple-equals": [
-            true,
-            "allow-null-check"
+            "allow-fast-null-checks"
         ],
         "variable-name": [
             true,
-            "ban-keywords"
+            "ban-keywords",
+            "check-format"
         ],
-        "whitespace": [
-            true,
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-type"
-        ]
-    }
+        // "completed-docs": [
+        //     true,
+        //     {
+        //         "classes": { "visibilities": ["exported"] },
+        //         "enums": { "visibilities": ["exported"] },
+        //         "enum-members": { "visibilities": ["exported"] },
+        //         "functions": { "visibilities": ["exported"] },
+        //         "interfaces": { "visibilities": ["exported"] },
+        //         "properties": { "privacies": ["public", "protected"] },
+        //         "methods": { "privacies": ["public", "protected"], "tags": { "content": {}, "existence": ["inheritdoc"] } },
+        //         "types": { "visibilities": ["exported"] },
+        //         "variables": { "visibilities": ["exported"] }
+        //     }
+        // ],
+        "quotemark": [true, "single", "jsx-double"],
+        "semicolon": [true, "never"],
+        "interface-name": [true, "never-prefix"],
+        "no-console": [false, "log", "error"],
+        "no-unused-variable": [true, {"ignore-pattern": "^_"}]
+    },
+    "rulesDirectory": []
 }
